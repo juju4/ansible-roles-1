@@ -6,8 +6,7 @@
     state: present
   when: ansible_distribution == 'Ubuntu'
   register: repo
-  notify:
-    - update apt cache
 
-- meta: flush_handlers
+- name: Ubuntu | update apt cache
+  apt: update_cache=yes
   when: repo.changed
