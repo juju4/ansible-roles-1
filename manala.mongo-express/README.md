@@ -8,11 +8,11 @@ It's part of the [Manala Ansible stack](http://www.manala.io) but can be used as
 
 ## Requirements
 
-This role is made to work with the __manala__ node-mongo-express debian package, available on the __manala__ debian repository. Please use the [**manala.apt**](https://galaxy.ansible.com/manala/apt/) role to handle it properly.
+This role is made to work with the __manala__ mongo-express debian package, available on the __manala__ debian repository. Please use the [**manala.apt**](https://galaxy.ansible.com/manala/apt/) role to handle it properly.
 
 ```yaml
 manala_apt_preferences:
- - node-mongo-express@manala
+ - mongo-express@manala
 ```
 
 ## Dependencies
@@ -34,6 +34,17 @@ Using ansible galaxy requirements file:
 ```yaml
 - src: manala.mongo-express
 ```
+
+## Role Variables
+
+### Definition
+
+| Name                                            | Default           | Type   | Description                            |
+| ----------------------------------------------- | ----------------- | ------ | -------------------------------------- |
+| `manala_mongo_express_install_packages`         | ~                 | Array  | Dependency packages to install         |
+| `manala_mongo_express_install_packages_default` | ['mongo-express'] | Array  | Default dependency packages to install |
+| `manala_mongo_express_config_template`          | ~                 | String | Configuration template path            |
+| `manala_mongo_express_config`                   | []                | String | Configuration                          |
 
 ## Example playbook
 

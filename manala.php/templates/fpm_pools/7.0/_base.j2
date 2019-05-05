@@ -1,6 +1,6 @@
 {%- for configs in item.config|default([config_name_default]) -%}
 
-    {%- for config_name, config in ({configs: []} if (configs is string) else configs).iteritems() -%}
+    {%- for config_name, config in ({configs: []} if (configs is string) else configs).items() -%}
 
 ; Start a new pool named '{{ config_name }}'.
 ; the variable $pool can be used in any directive and will be replaced by the
@@ -385,11 +385,11 @@
 ; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
 ; the current environment.
 ; Default Value: clean env
-{{ macros.config_row(config, 'env[HOSTNAME]', ';env[HOSTNAME] = $HOSTNAME', true) }}
-{{ macros.config_row(config, 'env[PATH]', ';env[PATH] = /usr/local/bin:/usr/bin:/bin', true) }}
-{{ macros.config_row(config, 'env[TMP]', ';env[TMP] = /tmp', true) }}
-{{ macros.config_row(config, 'env[TMPDIR]', ';env[TMPDIR] = /tmp', true) }}
-{{ macros.config_row(config, 'env[TEMP]', ';env[TEMP] = /tmp', true) }}
+{{ lookup('manala_php_fpm_pools_config', config, wantrow='env', wantrowtype='env', wantrowdefault=';env[HOSTNAME] = $HOSTNAME
+;env[PATH] = /usr/local/bin:/usr/bin:/bin
+;env[TMP] = /tmp
+;env[TMPDIR] = /tmp
+;env[TEMP] = /tmp', wantlist=True) }}
 
 ; Additional php.ini defines, specific to this pool of workers. These settings
 ; overwrite the values previously defined in the php.ini. The directives are the
@@ -416,9 +416,9 @@
 {{ macros.config_row(config, 'php_admin_flag[log_errors]', ';php_admin_flag[log_errors] = on', true) }}
 {{ macros.config_row(config, 'php_admin_value[memory_limit]', ';php_admin_value[memory_limit] = 32M', true) }}
 
-{% for config_extra_key, config_extra_value in config_extra.iteritems() -%}
+{% for config_extra_key, config_extra_value in config_extra.items() -%}
 {{ macros.config_row(config, config_extra_key, config_extra_value) }}
-{%- endfor %}
+{% endfor %}
 
 {{ macros.config(config, [
   'prefix',
@@ -455,17 +455,13 @@
   'catch_workers_output',
   'clear_env',
   'security.limit_extensions',
-  'env[HOSTNAME]',
-  'env[PATH]',
-  'env[TMP]',
-  'env[TMPDIR]',
-  'env[TEMP]',
+  'env',
   'php_admin_value[sendmail_path]',
   'php_flag[display_errors]',
   'php_admin_value[error_log]',
   'php_admin_flag[log_errors]',
   'php_admin_value[memory_limit]'
-] + config_extra.keys()) -}}
+] + config_extra.keys()|list) -}}
 
     {%- endfor %}
 

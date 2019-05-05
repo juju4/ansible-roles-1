@@ -39,87 +39,57 @@ Using ansible galaxy requirements file:
 
 ## Role Variables
 
-| Name                                          | Default                     | Type             | Description                                             |
-| --------------------------------------------- | --------------------------- | ---------------- | ------------------------------------------------------- |
-| `manala_php_version`                          | ~                           | String,Int,Float | Php version                                             |
-| `manala_php_sapis_exclusive`                  | false                       | Boolean          | Should the SAPIs list be exclusive ?                    |
-| `manala_php_sapis`                            | []                          | Array            | A list of PHP SAPIs                                     |
-| `manala_php_extensions_exclusive`             | false                       | Boolean          | Should the extensions list be exclusive ?               |
-| `manala_php_extensions`                       | []                          | Array            | A list of PHP extensions                                |
-| `manala_php_configs_global`                   | false                       | Boolean          | Should configs be global for all SAPIs ? (php 5.4 only) |
-| `manala_php_configs_template`                 | configs/empty.j2            | String           | Configs base template                                   |
-| `manala_php_configs_exclusive:`               | false                       | Boolean          | Should configs files be exclusive ?                     |
-| `manala_php_configs`                          | []                          | Array            | Configs files                                           |
-| `manala_php_cli_configs`                      | []                          | Array            | Configs files (cli SAPI only)                           |
-| `manala_php_fpm_configs`                      | []                          | Array            | Configs files (fpm SAPI only)                           |
-| `manala_php_cgi_configs`                      | []                          | Array            | Configs files (cgi SAPI only)                           |
-| `manala_php_phpdbg_configs`                   | []                          | Array            | Configs files (phpdbg SAPI only)                        |
-| `manala_php_fpm_pools_template`               | fpm_pools/empty.j2          | String           | Fpm pools base template                                 |
-| `manala_php_fpm_pools_exclusive`              | false                       | Boolean          | Should fpm pools files be exclusive ?                   |
-| `manala_php_fpm_pools`                        | [...]                       | Array            | Fpm pools files                                         |
-| `manala_php_blackfire`                        | false                       | Boolean          | Install blackfire                                       |
-| `manala_php_blackfire_agent_config_file`      | /etc/blackfire/agent        | String           | Blackfire agent config file                             |
-| `manala_php_blackfire_agent_config_template`  | blackfire/agent/default.j2  | String           | Blackfire agent config base template                    |
-| `manala_php_blackfire_agent_config`           | []                          | Array            | Blackfire agent config                                  |
-| `manala_php_blackfire_client_config_file`     | ~/.blackfire.ini            | String           | Blackfire client config file                            |
-| `manala_php_blackfire_client_config_template` | blackfire/client/default.j2 | String           | Blackfire client config base template                   |
-| `manala_php_blackfire_client_config`          | []                          | Array            | Blackfire client config                                 |
-| `manala_php_applications_dir`                 | /usr/local/bin              | String           | Applications directory                                  |
-| `manala_php_applications`                     | []                          | Array            | A list of php applications                              |
+| Name                                          | Default                       | Type                 | Description                                             |
+| --------------------------------------------- | ----------------------------- | -------------------- | ------------------------------------------------------- |
+| `manala_php_version`                          | ~                             | String,Integer,Float | Php version                                             |
+| `manala_php_sapis_exclusive`                  | false                         | Boolean              | Should the SAPIs list be exclusive ?                    |
+| `manala_php_sapis`                            | ~                             | Array                | A list of PHP SAPIs                                     |
+| `manala_php_sapis_default`                    | ['cli', 'fpm']                | Array                | Default list of PHP SAPIs                               |
+| `manala_php_extensions_exclusive`             | false                         | Boolean              | Should the extensions list be exclusive ?               |
+| `manala_php_extensions`                       | []                            | Array                | A list of PHP extensions                                |
+| `manala_php_configs_global`                   | false                         | Boolean              | Should configs be global for all SAPIs ? (php 5.4 only) |
+| `manala_php_configs_template`                 | 'configs/empty.j2'            | String               | Configs base template path                              |
+| `manala_php_configs_exclusive:`               | false                         | Boolean              | Should configs files be exclusive ?                     |
+| `manala_php_configs`                          | []                            | Array                | Configs files                                           |
+| `manala_php_cli_configs`                      | []                            | Array                | Configs files (cli SAPI only)                           |
+| `manala_php_fpm_configs`                      | []                            | Array                | Configs files (fpm SAPI only)                           |
+| `manala_php_cgi_configs`                      | []                            | Array                | Configs files (cgi SAPI only)                           |
+| `manala_php_phpdbg_configs`                   | []                            | Array                | Configs files (phpdbg SAPI only)                        |
+| `manala_php_fpm_pools_template`               | 'fpm_pools/empty.j2'          | String               | Fpm pools base template path                            |
+| `manala_php_fpm_pools_exclusive`              | false                         | Boolean              | Should fpm pools files be exclusive ?                   |
+| `manala_php_fpm_pools`                        | []                            | Array                | Fpm pools files                                         |
+| `manala_php_blackfire`                        | false                         | Boolean              | Install blackfire                                       |
+| `manala_php_blackfire_agent_config_file`      | '/etc/blackfire/agent'        | String               | Blackfire agent config file path                        |
+| `manala_php_blackfire_agent_config_template`  | 'blackfire/agent/default.j2'  | String               | Blackfire agent config base template path               |
+| `manala_php_blackfire_agent_config`           | []                            | Array                | Blackfire agent config                                  |
+| `manala_php_blackfire_client_config_file`     | '~/.blackfire.ini'            | String               | Blackfire client config file path                       |
+| `manala_php_blackfire_client_config_template` | 'blackfire/client/default.j2' | String               | Blackfire client config base template path              |
+| `manala_php_blackfire_client_config`          | []                            | Array                | Blackfire client config                                 |
+| `manala_php_applications_dir`                 | '/usr/local/bin'              | String               | Applications directory path                             |
+| `manala_php_applications`                     | []                            | Array                | A list of php applications                              |
 
 ### Configuration example
 
-#### Version
+#### Version matrix
 
-Php 5.4 (Debian wheezy only)
-```yaml
-manala_apt_preferences:
-  - php@dotdeb
+| Version | Distribution | Repository | *manala_apt_preferences* | *manala_php_version* | *manala_php_extensions_pecl_versioned* |
+| :---    | :---:        | :---:      | ---:                     | ---:                 | ---:                                   |
+| **5.4** | Wheezy       | Dotdeb     | `php@dotdeb`             | `5`                  | `true` (default)                       |
+| **5.5** | Wheezy       | Dotdeb     | `php@dotdeb_php55`       | `5`                  | `true` (default)                       |
+| **5.6** | Wheezy       | Dotdeb     | `php@dotdeb_php56`       | `5`                  | `true` (default)                       |
+| **5.6** | Jessie       | Sury       | `php@sury_php`           | `5.6`                |                                        |
+| **5.6** | Stretch      | Sury       | `php@sury_php`           | `5.6`                |                                        |
+| **7.0** | Jessie       | Dotdeb     | `php@dotdeb`             | `7.0`                | `true` (default)                       |
+| **7.0** | Jessie       | Sury       | `php@sury_php`           | `7.0`                | `false`                                |
+| **7.0** | Stretch      | Sury       | `php@sury_php`           | `7.0`                | `false`                                |
+| **7.1** | Jessie       | Sury       | `php@sury_php`           | `7.1`                |                                        |
+| **7.1** | Stretch      | Sury       | `php@sury_php`           | `7.1`                |                                        |
+| **7.2** | Jessie       | Sury       | `php@sury_php`           | `7.2`                |                                        |
+| **7.2** | Stretch      | Sury       | `php@sury_php`           | `7.2`                |                                        |
+| **7.3** | Jessie       | Sury       | `php@sury_php`           | `7.3`                |                                        |
+| **7.3** | Stretch      | Sury       | `php@sury_php`           | `7.3`                |                                        |
 
-manala_php_version: 5
-```
-
-Php 5.5 (Debian wheezy only)
-```yaml
-manala_apt_preferences:
-  - php@dotdeb_php55
-
-manala_php_version: 5
-```
-
-Php 5.6 (Debian wheezy)
-```yaml
-manala_apt_preferences:
-  - php@dotdeb_php56
-
-manala_php_version: 5
-```
-
-Php 5.6 (Debian jessie)
-```yaml
-manala_apt_preferences:
-  - php@sury_php
-
-manala_php_version: 5.6
-```
-
-Php 7.0 (Debian jessie only)
-```yaml
-manala_apt_preferences:
-  - php@dotdeb
-
-manala_php_version: 7.0
-```
-
-Php 7.1 (Debian jessie only)
-```yaml
-manala_apt_preferences:
-  - php@sury_php
-
-manala_php_version: 7.1
-```
-
-#### SAPIs
+#### Sapis
 
 ```yaml
 manala_php_sapis_exclusive: true # Ensure other sapis are automatically absents
@@ -194,9 +164,33 @@ manala_php_fpm_pools:
         - pm.start_servers:         2
         - pm.min_spare_servers:     1
         - pm.max_spare_servers:     3
-        - env[HOSTNAME]:            $HOSTNAME
+        - env:
+            FOO:     bar
+            APP_ENV: prod
         - php_flag[display_errors]: true
 ```
+
+#### Applications:
+
+Installation of specific php applications
+
+```
+  php_applications:
+    - drush@8.1.18
+```
+
+##### List of available applications:
+
+- phpcs
+- phpcbf
+- openl10n
+- phpunit
+- php-cs-fixer
+- couscous
+- security-checker
+- deptrac
+- wp-cli
+- drush
 
 #### Blackfire
 

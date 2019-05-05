@@ -1,0 +1,63 @@
+---
+
+- name: "{{ test }}.1"
+  hosts: debian
+  become: true
+  vars:
+    manala_apt_preferences:
+      - git@backports
+      - libssl1.0.0@backports
+      - php@dotdeb:300
+      - dotdeb:100
+      - dotdeb:200
+    manala_apt_repositories:
+      - nginx
+      - nginx
+      - source: deb http://deb.bearstech.com/debian {{ ansible_distribution_release }}-bearstech main
+      - source: deb http://deb.bearstech.com/debian {{ ansible_distribution_release }}-bearstech main
+        key: bearstech
+      - source: deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main
+        key:
+          url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          id:  ACCC4CF8
+      - pattern: grafana
+      - source: deb https://downloads.mariadb.com/MaxScale/2.1.15/debian {{ ansible_distribution_release }} main
+        key: maxscale
+      - source: deb https://downloads.mariadb.com/MaxScale/2.1.16/debian {{ ansible_distribution_release }} main
+        key: maxscale
+        state: present
+      - source: deb https://downloads.mariadb.com/MaxScale/2.1.17/debian {{ ansible_distribution_release }} main
+        key: maxscale
+        state: absent
+  pre_tasks:
+    # Jessie repositories have been archived, meaning that some of them
+    # (backports, for instance) will remain invalid forever.
+    - copy:
+        dest: /etc/apt/apt.conf.d/archive
+        content: |
+          Acquire::Check-Valid-Until "false";
+      when: ansible_distribution_release in ['jessie']
+  roles:
+    - manala.apt
+  post_tasks:
+    - name: Goss
+      command: goss --gossfile {{ test }}.goss.1.yml validate
+
+- name: "{{ test }}.2"
+  hosts: debian
+  become: true
+  vars:
+    manala_apt_repositories:
+      - source: deb https://downloads.mariadb.com/MaxScale/2.1.15/debian {{ ansible_distribution_release }} main
+        key: maxscale
+      - source: deb https://downloads.mariadb.com/MaxScale/2.1.16/debian {{ ansible_distribution_release }} main
+        key: maxscale
+        state: absent
+      - source: deb https://downloads.mariadb.com/MaxScale/2.1.17/debian {{ ansible_distribution_release }} main
+        key: maxscale
+        state: present
+  roles:
+    - manala.apt
+  post_tasks:
+    - name: Goss
+      command: goss --gossfile {{ test }}.goss.2.yml validate

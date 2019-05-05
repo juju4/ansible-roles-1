@@ -1,5 +1,12 @@
 ---
 
+- name: install > Packages
+  apt:
+    name: "{{ manala_composer_install_packages|default(manala_composer_install_packages_default, True) }}"
+    install_recommends: false
+    update_cache:       true
+    cache_valid_time:   3600
+
 - name: install > Stat bin
   stat:
     path: "{{ manala_composer_bin }}"

@@ -6,6 +6,37 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.5] - 2018-11-07
+### Fixed
+- Telegraf 1.8.3 config(s) templates
+
+### Added
+- Handle configs file state (absent|present)
+- Configs template "input_cgroup"
+- Configs template "input_netstat"
+- Configs template "input_kernel"
+- Configs template "input_kernel_vmstat"
+- Configs template "input_processes"
+- Configs template "input_mysql"
+- Configs template "input_nginx"
+- Configs template "input_phpfpm"
+
+## [1.0.4] - 2018-10-17
+### Fixed
+- Python 3 compatibility
+
+## [1.0.3] - 2018-06-05
+### Added
+- Handle dependency packages to install
+
+### Changed
+- Replace deprecated uses of "include"
+- Pass apt module packages list directly to the `name` option
+
+## [1.0.2] - 2017-12-06
+### Added
+- Debian stretch support
+
 ## [1.0.1] - 2017-09-28
 ### Changed
 - Fix tests

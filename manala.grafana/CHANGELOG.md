@@ -5,6 +5,30 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.0.4] - 2018-11-16
+### Fixed
+- Keep legacy sysvinit services handling in ansible 2.6+
+
+## [1.0.3] - 2018-10-17
+### Fixed
+- Python 3 compatibility
+
+## [1.0.2] - 2018-06-05
+### Added
+- Handle dependency packages to install
+- Loop over api calls until its ready
+
+### Changed
+- Fix missings ansible 2.1 deprecation "Supplying headers via HEADER_* is deprecated"
+- Replace deprecated jinja tests used as filters
+- Replace deprecated uses of "include"
+- Pass apt module packages list directly to the `name` option
+
+## [1.0.1] - 2017-12-06
+### Added
+- Debian stretch support
+
 ### Changed
 - Fix ansible 2.1 deprecation "Supplying headers via HEADER_* is deprecated"
 

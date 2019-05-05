@@ -1,40 +1,49 @@
 ---
 
-# Dependencies
-- include: dependencies.yml
+# Configs
+- import_tasks: configs.yml
+  tags:
+    - manala_apt
+
+# Install
+- import_tasks: install.yml
   tags:
     - manala_apt
 
 # Sources list
-- include: sources_list.yml
-  when: (manala_apt_sources_list_template is not none) or (manala_apt_sources_list|length)
+- import_tasks: sources_list.yml
   tags:
     - manala_apt
 
 # Preferences
-- include: preferences.yml
+- import_tasks: preferences.yml
   tags:
     - manala_apt
 
 # Keys
-- include: keys.yml
+- import_tasks: keys.yml
   tags:
     - manala_apt
 
 # Repositories
-- include: repositories.yml
+- import_tasks: repositories.yml
+  tags:
+    - manala_apt
+
+# Holds
+- import_tasks: holds.yml
   tags:
     - manala_apt
 
 # Update
-- include: update.yml
-  when: manala_apt['update']|default(false)
+- import_tasks: update.yml
+  when: __manala_apt['update']
   tags:
     - manala_apt
     - manala_apt.update
     - manala.update
 
 # Packages
-- include: packages.yml
+- import_tasks: packages.yml
   tags:
     - manala_apt

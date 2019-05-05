@@ -6,6 +6,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.6] - 2018-12-13
+### Added
+- PHP 7.3 support
+
+## [1.0.5] - 2018-10-17
+### Fixed
+- Python 3 compatibility
+
+## [1.0.4] - 2018-06-05
+### Added
+- Handle dependency packages to install
+
+### Changed
+- Replace deprecated uses of "include"
+
+## [1.0.3] - 2017-12-08
+### Added
+- PHP 7.2 support
+
+## [1.0.2] - 2017-12-06
+### Added
+- Debian stretch support
+
 ## [1.0.1] - 2017-10-10
 ### Added
 - Databases config option (See: https://github.com/erikdubbelboer/phpRedisAdmin/commit/d344599f6c3e4bd080fe3d0f243a561c55b1a7f9)

@@ -1,5 +1,7 @@
 ---
 
-package:
-  openjdk-7-jre:
-    installed: true
+command:
+  java -version:
+    exit-status: 0
+    stderr:
+      - "/^(java|openjdk) version \"1\\..*\"$/"

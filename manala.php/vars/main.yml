@@ -5,14 +5,12 @@ manala_php_versions:
   '5':
     release:
       - wheezy
-    package_prefix:      php5-
-    package_pecl_prefix: php5-
-    enmod_bin:           /usr/sbin/php5enmod
-    dismod_bin:          /usr/sbin/php5dismod
-    fpm_bin:             /usr/sbin/php5-fpm
-    fpm_service:         php5-fpm
-    config_dir:          /etc/php5
-    log_dir:             /var/log/php5
+    enmod_bin:   /usr/sbin/php5enmod
+    dismod_bin:  /usr/sbin/php5dismod
+    fpm_bin:     /usr/sbin/php5-fpm
+    fpm_service: php5-fpm
+    config_dir:  /etc/php5
+    log_dir:     /var/log/php5
     sapis:
       #############
       # Available #
@@ -78,14 +76,13 @@ manala_php_versions:
   '5.6':
     release:
       - jessie
-    package_prefix:      php5.6-
-    package_pecl_prefix: php-
-    enmod_bin:           /usr/sbin/phpenmod
-    dismod_bin:          /usr/sbin/phpdismod
-    fpm_bin:             /usr/sbin/php-fpm5.6
-    fpm_service:         php5.6-fpm
-    config_dir:          /etc/php/5.6
-    log_dir:             /var/log/php5.6
+      - stretch
+    enmod_bin:   /usr/sbin/phpenmod
+    dismod_bin:  /usr/sbin/phpdismod
+    fpm_bin:     /usr/sbin/php-fpm5.6
+    fpm_service: php5.6-fpm
+    config_dir:  /etc/php/5.6
+    log_dir:     /var/log/php5.6
     sapis:
       #############
       # Available #
@@ -140,14 +137,12 @@ manala_php_versions:
     release:
       - jessie
       - stretch
-    package_prefix:      php7.0-
-    package_pecl_prefix: php7.0-
-    enmod_bin:           /usr/sbin/phpenmod
-    dismod_bin:          /usr/sbin/phpdismod
-    fpm_bin:             /usr/sbin/php-fpm7.0
-    fpm_service:         php7.0-fpm
-    config_dir:          /etc/php/7.0
-    log_dir:             /var/log/php7.0
+    enmod_bin:   /usr/sbin/phpenmod
+    dismod_bin:  /usr/sbin/phpdismod
+    fpm_bin:     /usr/sbin/php-fpm7.0
+    fpm_service: php7.0-fpm
+    config_dir:  /etc/php/7.0
+    log_dir:     /var/log/php7.0
     sapis:
       #############
       # Available #
@@ -200,14 +195,12 @@ manala_php_versions:
     release:
       - jessie
       - stretch
-    package_prefix:      php7.1-
-    package_pecl_prefix: php-
-    enmod_bin:           /usr/sbin/phpenmod
-    dismod_bin:          /usr/sbin/phpdismod
-    fpm_bin:             /usr/sbin/php-fpm7.1
-    fpm_service:         php7.1-fpm
-    config_dir:          /etc/php/7.1
-    log_dir:             /var/log/php7.1
+    enmod_bin:   /usr/sbin/phpenmod
+    dismod_bin:  /usr/sbin/phpdismod
+    fpm_bin:     /usr/sbin/php-fpm7.1
+    fpm_service: php7.1-fpm
+    config_dir:  /etc/php/7.1
+    log_dir:     /var/log/php7.1
     sapis:
       #############
       # Available #
@@ -256,14 +249,132 @@ manala_php_versions:
       #- opcache
       #- json
       #- readline
+  '7.2':
+    release:
+      - jessie
+      - stretch
+    enmod_bin:   /usr/sbin/phpenmod
+    dismod_bin:  /usr/sbin/phpdismod
+    fpm_bin:     /usr/sbin/php-fpm7.2
+    fpm_service: php7.2-fpm
+    config_dir:  /etc/php/7.2
+    log_dir:     /var/log/php7.2
+    sapis:
+      #############
+      # Available #
+      #############
+      - cli
+      - fpm
+      - cgi
+      - phpdbg
+    extensions:
+      ############
+      # Embedded #
+      ############
+      - date
+      - filter
+      - hash
+      - libxml
+      - openssl
+      - pcntl
+      - pcre
+      - reflection
+      - session
+      - sodium
+      - spl
+      - zlib
+      ##########
+      # Common #
+      ##########
+      - calendar
+      - ctype
+      - exif
+      - fileinfo
+      - ftp
+      - gettext
+      - iconv
+      - pdo
+      - phar
+      - posix
+      - shmop
+      - sockets
+      - sysvmsg
+      - sysvsem
+      - sysvshm
+      - tokenizer
+      #########
+      # Sapis #
+      #########
+      #- opcache
+      #- json
+      #- readline
+  '7.3':
+    release:
+      - jessie
+      - stretch
+    enmod_bin:   /usr/sbin/phpenmod
+    dismod_bin:  /usr/sbin/phpdismod
+    fpm_bin:     /usr/sbin/php-fpm7.3
+    fpm_service: php7.3-fpm
+    config_dir:  /etc/php/7.3
+    log_dir:     /var/log/php7.3
+    sapis:
+      #############
+      # Available #
+      #############
+      - cli
+      - fpm
+      - cgi
+      - phpdbg
+    extensions:
+      ############
+      # Embedded #
+      ############
+      - date
+      - filter
+      - hash
+      - libxml
+      - openssl
+      - pcntl
+      - pcre
+      - reflection
+      - session
+      - sodium
+      - spl
+      - zlib
+      ##########
+      # Common #
+      ##########
+      - calendar
+      - ctype
+      - exif
+      - fileinfo
+      - ftp
+      - gettext
+      - iconv
+      - pdo
+      - phar
+      - posix
+      - shmop
+      - sockets
+      - sysvmsg
+      - sysvsem
+      - sysvshm
+      - tokenizer
+      #########
+      # Sapis #
+      #########
+      #- opcache
+      #- json
+      #- readline
 
 # Pecl
-manala_php_pecl:
-  extensions:
+manala_php_extensions_pecl:
     - amqp
     - apcu
     - apcu-bc
     - ast
+    - ds
     - gearman
     - geoip
     - gmagick
@@ -273,6 +384,7 @@ manala_php_pecl:
     - mailparse
     - memcache
     - memcached
+    - mongo
     - mongodb
     - msgpack
     - oauth
@@ -281,6 +393,7 @@ manala_php_pecl:
     - raphf
     - redis
     - rrd
+    - sass
     - smbclient
     - solr
     - ssh2
@@ -305,6 +418,7 @@ manala_php_applications_patterns:
   phpunit:
     source:         https://phar.phpunit.de/phpunit.phar
     source_version: https://phar.phpunit.de/phpunit-{version}.phar
+    validate_certs: "{{ (ansible_distribution_release == 'wheezy')|ternary(false, true) }}"
   php-cs-fixer:
     source: http://get.sensiolabs.org/php-cs-fixer.phar
   couscous:
@@ -315,3 +429,5 @@ manala_php_applications_patterns:
     source: http://get.sensiolabs.de/deptrac.phar
   wp-cli:
     source: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+  drush:
+    source_version: https://github.com/drush-ops/drush/releases/download/{version}/drush.phar

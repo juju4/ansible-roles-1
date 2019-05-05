@@ -3,7 +3,7 @@
         {%- if parameter is string or parameter is number -%}
             {{ parameter }}{{ '\n' }}
         {%- elif parameter is mapping -%}
-            {%- for parameter_key, parameter_value in parameter.iteritems() -%}
+            {%- for parameter_key, parameter_value in parameter.items() -%}
                 {%- if parameter_key not in exclusions -%}
                     {{ _config_parameter(parameter_key, parameter_value, indent) }}{{ '\n' }}
                 {%- endif -%}
@@ -16,7 +16,7 @@
     {%- set vars = {'values': []} -%}
     {%- for parameter in parameters -%}
         {%- if parameter is mapping -%}
-            {%- for parameter_key, parameter_value in parameter.iteritems() -%}
+            {%- for parameter_key, parameter_value in parameter.items() -%}
                 {%- if parameter_key == key -%}
                     {%- if vars.update({'values': vars['values'] + [parameter_value]}) -%}{%- endif -%}
                 {%- endif -%}
@@ -31,9 +31,7 @@
         {%- if placeholder -%}
             {{ default }}
         {%- else -%}
-            {%- for value in (default if (default is sequence and default is not string) else [default]) -%}
-                {{ _config_parameter(key, value, indent) }}{% if not loop.last %}{{ '\n' }}{% endif %}
-            {%- endfor -%}
+            {{ _config_parameter(key, default, indent) }}
         {%- endif -%}
     {%- endif -%}
 {%- endmacro -%}

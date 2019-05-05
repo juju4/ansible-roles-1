@@ -38,11 +38,12 @@ Using ansible galaxy requirements file:
 
 ## Role Variables
 
-| Name                               | Default                    | Type   | Description                                    |
-| ---------------------------------- | -------------------------- | ------ | ---------------------------------------------- |
-| `manala_apparmor_install_packages` | [apparmor]                 | Array  | Packages to install                            |
-| `manala_apparmor_configs_dir`      | /etc/apparmor.d            | String | Configurations directory                       |
-| `manala_apparmor_configs`          | [ ]                        | Array  | Configurations templates                       |
+| Name                                       | Default           | Type   | Description                            |
+| ------------------------------------------ | ----------------- | ------ | -------------------------------------- |
+| `manala_apparmor_install_packages`         | ~                 | Array  | Dependency packages to install         |
+| `manala_apparmor_install_packages_default` | ['apparmor']      | Array  | Default dependency packages to install |
+| `manala_apparmor_configs_dir`              | '/etc/apparmor.d' | String | Configurations directory path          |
+| `manala_apparmor_configs`                  | []                | Array  | Configurations templates               |
 
 ## Example playbook
 
@@ -52,7 +53,7 @@ Using ansible galaxy requirements file:
   vars:
     manala_apparmor_configs:
       - file:     lxc/lxc-profile-a
-        template: "{{ playbook_dir }}/templates/lxc-default.j2"
+        template: lxc-default.j2
       - file:     lxc/lxc-old-profile
         state:    absent
 

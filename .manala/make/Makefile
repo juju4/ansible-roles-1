@@ -1,15 +1,15 @@
-.PHONY: lint test split sync
+.PHONY: lint test release sync
 
 ##########
 # Manala #
 ##########
 
-MANALA_DIR := $(abspath $(patsubst %/make/Makefile,%,$(firstword $(filter %.manala/make/Makefile,$(MAKEFILE_LIST)))))
+MANALA_MAKE_DIR := $(abspath $(patsubst %/Makefile,%,$(lastword $(MAKEFILE_LIST))))
 
 include \
-	$(MANALA_DIR)/make/Makefile.manala \
-	$(MANALA_DIR)/make/Makefile.travis \
-	$(MANALA_DIR)/make/Makefile.gitsplit
+	$(MANALA_MAKE_DIR)/Makefile.manala \
+	$(MANALA_MAKE_DIR)/Makefile.travis \
+	$(MANALA_MAKE_DIR)/Makefile.gitsplit
 
 -include \
 	$(MANALA_CURRENT_DIR)/.env
@@ -20,8 +20,8 @@ MANALA_VERBOSE := $(if $(VERBOSE),$(VERBOSE),$(MANALA_VERBOSE))
 # Roles #
 #########
 
-ROLES_ALL  := $(sort $(patsubst %/,%,$(wildcard */)))
-ROLES_DIFF := $(filter-out .manala,$(sort $(shell git diff --name-only $(TRAVIS_COMMIT_RANGE)| grep "/" | cut -d/ -f1)))
+ROLES_ALL  = $(filter-out $(ROLES_DEPRECATED),$(sort $(patsubst %/,%,$(wildcard */))))
+ROLES_DIFF = $(filter-out $(ROLES_DEPRECATED) .manala,$(sort $(shell git diff --name-only $(TRAVIS_COMMIT_RANGE)| grep "/" | cut -d/ -f1)))
 
 #############
 # Partition #
@@ -29,8 +29,8 @@ ROLES_DIFF := $(filter-out .manala,$(sort $(shell git diff --name-only $(TRAVIS_
 
 PART ?= 1/1
 
-PARTITION_PART  := $(call list_first,$(call list_split,/,$(PART)))
-PARTITION_PARTS := $(call list_last,$(call list_split,/,$(PART)))
+PARTITION_PART  := $(call list_split_first,/,$(PART))
+PARTITION_PARTS := $(call list_split_last,/,$(PART))
 
 ########
 # Lint #
@@ -77,17 +77,18 @@ TEST_HELP += $(call help,test.diff,Test roles - Diff)
 test.diff: ROLES = $(ROLES_DIFF)
 test.diff: test
 
-#########
-# Split #
-#########
+###########
+# Release #
+###########
 
-MANALA_HELP += $(SPLIT_HELP)\n
+MANALA_HELP += $(RELEASE_HELP)\n
 
-SPLIT_HELP = \
-	$(call help_section,Split) \
-	$(call help,split,Split git repositories)
+RELEASE_HELP = \
+	$(call help_section,Release) \
+	$(call help,release,Release ansible roles)
 
-split:
+release:
+	$(call confirm,Please confirm release of *ALL* ansible roles)
 	$(call gitsplit)
 
 ########
@@ -101,7 +102,7 @@ SYNC_HELP = \
 	$(call help,sync,Sync roles)
 
 sync:
-	$(call fail_unless,FROM)
+	$(call fail_if_not,$(FROM),FROM is empty or not set)
 	$(call confirm,Please confirm sync from \"$(FROM)\" ansible role)
 	for ROLE in */; do \
 		echo $$ROLE; \

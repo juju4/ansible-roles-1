@@ -43,16 +43,18 @@ Using ansible galaxy requirements file:
 
 ## Role Variables
 
-| Name                              | Default           | Type    | Description                                 |
-| --------------------------------- | ----------------- | ------- | ------------------------------------------- |
-| `manala_nginx_config_template`    | config/default.j2 | String  | Main config template                        |
-| `manala_nginx_config`             | {}                | Array   | Main config                                 |
-| `manala_nginx_configs`            | {}                | Array   | Configs                                     |
-| `manala_nginx_configs_template`   | configs/empty.j2  | String  | Template to use to define a host            |
-| `manala_nginx_configs_exclusive`  | false             | Boolean | Exclusion of existings files                |
-| `manala_nginx_configs_dir`        | /etc/nginx/conf.d | String  | Path to the main configuration directory    |
-| `manala_nginx_user`               | www-data          | String  | User running nginx                          |
-| `manala_nginx_log_dir`            | /var/log/nginx    | String  | Directory where Nginx will store is logs    |
+| Name                                    | Default             | Type    | Description                                    |
+| --------------------------------------- | ------------------- | ------- | ---------------------------------------------- |
+| `manala_nginx_install_packages`         | 'config/default.j2' | String  | Dependency packages to install                 |
+| `manala_nginx_install_packages_default` | 'config/default.j2' | String  | Default dependency packages to install         |
+| `manala_nginx_config_template`          | 'config/default.j2' | String  | Main configuration template path               |
+| `manala_nginx_config`                   | []                  | Array   | Main configuration                             |
+| `manala_nginx_configs`                  | []                  | Array   | Configurations                                 |
+| `manala_nginx_configs_template`         | 'configs/empty.j2'  | String  | Configurations template path                   |
+| `manala_nginx_configs_exclusive`        | false               | Boolean | Exclusion of existings files                   |
+| `manala_nginx_configs_dir`              | '/etc/nginx/conf.d' | String  | Configurations directory path                  |
+| `manala_nginx_user`                     | 'www-data'          | String  | User running nginx                             |
+| `manala_nginx_log_dir`                  | '/var/log/nginx'    | String  | Directory path where Nginx will store its logs |
 
 
 ### Nginx configuration
@@ -76,13 +78,15 @@ The `manala_nginx_config` key is made to allow you to alter main Nginx configura
 ```yaml
 manala_nginx_config:
   - user: nginx
+  - load_module: modules/ngx_http_geoip_module.so
+  - load_module: modules/ngx_stream_geoip_module.so
   - events:
     - worker_connections: 1024
 ```
 
 ### Exclusivity
 
-`manala_nginx_configs_exclusive` allow you to clean up existing nginx configuration files into directory defined by the `manala_nginx_configs_dir` key. Made to be sure no old or manualy created files will alter current configuration.
+`manala_nginx_configs_exclusive` allow you to clean up existing nginx configuration files into directory defined by the `manala_nginx_configs_dir` key. Made to be sure no old or manually created files will alter current configuration.
 
 ```yaml
 manala_nginx_configs_exclusive: true
@@ -135,6 +139,9 @@ manala_nginx_configs:
         - client_max_body_size: 16M
         - location /:
           - try_files: $uri /index.php$is_args$args
+  # Enables HTTPS offloading support based on a self-signed certificate
+  - file: app_ssl.conf
+    template: configs/app_ssl_offloading.dev.j2
 ```
 
 ## Example playbook

@@ -1,19 +1,17 @@
 ---
 
-# Install
-- include: install.yml
+- name: main > Include "{{ ansible_os_family }}" vars
+  include_vars:
+    file: "{{ ansible_os_family|lower }}/main.yml"
   tags:
-    - manala_locales
+     - manala_locales
 
-# Codes
-- include: codes.yml
-  when: manala_locales_codes|length
+- import_tasks: debian/main.yml
+  when: ansible_os_family == 'Debian'
   tags:
-    - manala_locales
+     - manala_locales
 
-# Codes Defaults
-- include: codes_default.yml
-  # see https://github.com/ansible/ansible/issues/20392
-  when: manala_locales_codes_default|default('') != ''
+- import_tasks: redhat/main.yml
+  when: ansible_os_family == 'RedHat'
   tags:
-    - manala_locales
+     - manala_locales

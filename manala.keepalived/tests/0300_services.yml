@@ -1,17 +1,15 @@
 ---
 
 - name: "{{ test }}"
-  hosts: debian.jessie
+  hosts: debian
   become: true
+  vars:
+    manala_keepalived_config:
+      - global_defs:
+        - router_id: LVS_DEVEL
   pre_tasks:
-    - include: pre_tasks/disable_systemd.yml
-    - include: pre_tasks/manala.yml
-    - copy:
-        dest: /etc/apt/preferences.d/keepalived
-        content: |
-          Package:      keepalived*
-          Pin:          origin debian.manala.io
-          Pin-Priority: 900
+    - import_tasks: pre_tasks/disable_systemd.yml
+    - import_tasks: pre_tasks/manala.yml
   roles:
     - manala.keepalived
   post_tasks:

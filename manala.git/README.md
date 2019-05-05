@@ -39,26 +39,20 @@ None
 
 ## Role Variables
 
-| Name                         | Default           | Type          | Description                      |
-|----------------------------- |------------------ |-------------- |--------------------------------- |
-| `manala_git_config_file`     | /etc/gitconfig    | String (path) | Path to config file              |
-| `manala_git_config_template` | config/empty.j2   | String (path) | Path to config template          |
-| `manala_git_config`          | []                | Array         | List of git config options       |
-| `manala_git_repositories`    | []                | Array         | List of repositories to checkout |
+| Name                                  | Default           | Type   | Description                            |
+| ------------------------------------- | ----------------- | ------ | -------------------------------------- |
+| `manala_git_install_packages`         | ~                 | Array  | Dependency packages to install         |
+| `manala_git_install_packages_default` | ['git']           | Array  | Default dependency packages to install |
+| `manala_git_config_file`              | '/etc/gitconfig'  | String | Configuration file path                |
+| `manala_git_config_template`          | 'config/empty.j2' | String | Configuration template path            |
+| `manala_git_config`                   | []                | Array  | List of git config options             |
+| `manala_git_repositories`             | []                | Array  | List of repositories to checkout       |
 
 ### GIT configuration
 
 The `manala_git_config_file` key allow you to specify the path to the config file.
 
-#### Example:
-
-```yaml
----
-
-manala_git_config_file: "{{ playbook_dir }}/templates/git/default.dev.j2"
-```
-
-The `manala_git_config_template` key will allow you to use differents main configuration templates. The role is shipped with basic templates :
+The `manala_git_config_template` key will allow you to use different main configuration templates. The role is shipped with basic templates :
 
 - base (Simple template with no default configuration)
 - dev (This configuration will provide options for Vagrant VM, like ohmyzsh)
@@ -66,6 +60,14 @@ The `manala_git_config_template` key will allow you to use differents main confi
 - prod (For production purpose. Light configuration template)
 
 GIT experienced users can provide their own custom template with the `manala_git_config_template` key.
+
+#### Example:
+
+```yaml
+---
+
+manala_git_config_template: config/default.dev.j2
+```
 
 The `manala_git_config` key allow to define git config keys like the following:
 

@@ -23,30 +23,26 @@ manala_skeleton_options:
   vim:                   false
   alternatives:          false
   files:                 false
-  docker:                false
-  systemd:               false
   mailhog:               false
   nodejs:                false
-  nodejs_version:        "{{ {'wheezy': '6', 'jessie': '8'}[ansible_distribution_release] }}" # '0.10'|'0.12'|'4'|'5'|'6'|'7'|'8'
+  nodejs_version:        "{{ {'wheezy': '6', 'jessie': '10', 'stretch': '10'}[ansible_distribution_release] }}" # '0.10'|'0.12'|'4'|'5'|'6'|'7'|'8'|'10'
   npm:                   false
   yarn:                  false
   php:                   false
-  php_version:           "{{ {'wheezy': '5.6', 'jessie': '7.1'}[ansible_distribution_release] }}" # '5.4'|'5.5'|'5.6'|'7.0'|'7.1'
+  php_version:           "{{ {'wheezy': '5.6', 'jessie': '7.3', 'stretch': '7.3'}[ansible_distribution_release] }}" # '5.4'|'5.5'|'5.6'|'7.0'|'7.1'|'7.2'|'7.3'
   composer:              false
   nginx:                 false
   supervisor:            false
   phantomjs:             false
-  heka:                  false
-  rtail:                 false
   ngrok:                 false
   ntp:                   false
   java:                  false
   cron:                  false
   opcache_dashboard:     false
   mysql:                 false
-  mysql_version:         '5.6' # '5.6'|'5.7'
+  mysql_version:         '5.7' # '5.6'|'5.7'
   mariadb:               false
-  mariadb_version:       '10.1' # '10.0'|'10.1'|'10.2'
+  mariadb_version:       '10.3' # '10.0'|'10.1'|'10.2'|'10.3'
   phpmyadmin:            false
   postgresql:            false
   postgresql_version:    '9.5'
@@ -57,14 +53,16 @@ manala_skeleton_options:
   mongodb_version:       '3.2'
   mongo_express:         false
   elasticsearch:         false
-  elasticsearch_version: '1.7'
+  elasticsearch_version: '6' # '1.5'|'1.6'|'1.7'|'2'|'5'|'6'
   influxdb:              false
   dnsmasq:               false
   sqlite:                false
+  thumbor:               false
 
   # App
   app:
     env:          dev
+    env_vars:     {}
     user:         app
     group:        app
     host:         "{{ ansible_fqdn }}"

@@ -42,14 +42,23 @@ None
 
 ### Definition
 
-| Name                          | Default  | Type  | Description                            |
-| ----------------------------- | -------- | ----- | -------------------------------------- |
-| `manala_apt_components`       | ['main'] | Array | Collection of components               |
-| `manala_apt_sources_list`     | []       | Array | Collection of sources                  |
-| `manala_apt_repositories`     | []       | Array | Collection of repositories             |
-| `manala_apt_preferences`      | []       | Array | Collection of preferences              |
-| `manala_apt_packages`         | []       | Array | Collection of packages                 |
-| `manala_apt_cache_valid_time` | 3600     | Int   | Permitted age of apt cache, in seconds |
+| Name                                  | Default                                               | Type    | Description                            |
+| ------------------------------------- | ----------------------------------------------------- | ------- | -------------------------------------- |
+| `manala_apt_configs_exclusive`        | false                                                 | Boolean | Configurations exclusivity             |
+| `manala_apt_configs_dir`              | '/etc/apt/apt.conf.d'                                 | String  | Configurations dir path                |
+| `manala_apt_configs_template`         | 'configs/empty.j2'                                    | String  | Default configurations template path   |
+| `manala_apt_configs`                  | []                                                    | Array   | Configurations                         |
+| `manala_apt_install_packages`         | ~                                                     | Array   | Dependency packages to install         |
+| `manala_apt_install_packages_default` | ['apt-transport-https', 'openssl', 'ca-certificates'] | Array   | Default dependency packages to install |
+| `manala_apt_components`               | ['main']                                              | Array   | Collection of components               |
+| `manala_apt_sources_list`             | []                                                    | Array   | Collection of sources                  |
+| `manala_apt_repositories`             | []                                                    | Array   | Collection of repositories             |
+| `manala_apt_preferences`              | []                                                    | Array   | Collection of preferences              |
+| `manala_apt_holds_exclusive`          | false                                                 | Array   | Holds exclusivity                      |
+| `manala_apt_holds`                    | []                                                    | Array   | Collection of holds                    |
+| `manala_apt_packages`                 | []                                                    | Array   | Collection of packages                 |
+| `manala_apt_cache_valid_time`         | 3600                                                  | Integer | Permitted age of apt cache, in seconds |
+| `manala_apt.update`                   | false                                                 | Boolean | Update packages                        |
 
 ### Example
 
@@ -69,6 +78,43 @@ None
   roles:
     - role: manala.apt
 ```
+### Exclusivity
+
+`manala_apt_configs_exclusive` allow you to clean up existing apt configuration files into directory defined by the `manala_apt_configs_dir` key. Made to be sure no old or manually created files will alter current configuration.
+
+```yaml
+manala_apt_configs_exclusive: true
+```
+
+### Configs
+
+`manala_apt_configs` allows you to define apt configuration files using template, content and config.
+
+Template
+
+```yaml
+manala_apt_configs:
+      - file: foo_template
+        template: configs/check_valid_until_false.j2
+```
+Content
+
+```yaml
+manala_apt_configs:
+      - file: foo_content
+        content: |
+          APT::Install-Recommends "false";
+        state: absent
+```
+
+Config
+
+```yaml
+manala_apt_configs:
+      - file: foo
+        config:
+          - Acquire::Check-Valid-Until: true
+```
 
 ### Components
 
@@ -84,8 +130,8 @@ Define manually each sources
 
 ```yaml
 manala_apt_sources_list:
-  - deb: http://httpredir.debian.org/debian wheezy main
-  - deb http://httpredir.debian.org/debian wheezy contrib
+  - deb: http://deb.debian.org/debian stretch main
+  - deb http://deb.debian.org/debian stretch contrib
 ```
 
 Or use predefined templates
@@ -99,8 +145,8 @@ Or combine both
 ```yaml
 manala_apt_sources_list_template: sources_list/default_src.j2
 manala_apt_sources_list:
-  - deb-src: http://httpredir.debian.org/debian wheezy main
-  - deb-src http://httpredir.debian.org/debian wheezy contrib
+  - deb-src: http://deb.debian.org/debian stretch main
+  - deb-src http://deb.debian.org/debian stretch contrib
 ```
 
 ### Repositories
@@ -136,9 +182,15 @@ manala_apt_repositories:
   - nodesource_6
   - nodesource_7
   - nodesource_8
+  - nodesource_10
   - postgresql
+  - maxscale_2_0
+  - maxscale_2_1
+  - maxscale_2_2
   - mongodb_3_0
   - mongodb_3_1
+  - mongodb_3_6
+  - mongodb_4_0
   - varnish_4_0
   - jenkins
   - sensu
@@ -146,7 +198,7 @@ manala_apt_repositories:
   - proxmox
   - proxmox_enterprise
   - logentries
-  - galera
+  - galera_3
   - grafana
   - elasticsearch_1_5
   - elasticsearch_1_6
@@ -206,13 +258,33 @@ Verbose
 ```yaml
 manala_apt_preferences:
   - package:  '*'
-    pin: release o=Debian,a=stable
+    pin:      release o=Debian,a=stable
     priority: 600
     file:     dotdeb
   - package:  'php-*'
     pin:      release o=Debian,a=stable
     priority: 900
     file:     php
+    state:    absent
+```
+
+### Holds
+
+Handle your holded packages (the ones you don't want to upgrade) using:
+
+```yaml
+manala_apt_holds:
+  - foo # Ensure "foo" package won't be upgraded
+  - package: bar # The same with "bar" package, using verbose syntax
+    hold: true
+  - package: baz # Ensure "baz" package *will* be upgraded
+    hold: false
+```
+
+An exclusivity mode is also provided, to ensure *ALL* packages but the ones you set will be upgradable.
+
+```yaml
+manala_apt_holds_exclusive: true
 ```
 
 ### Packages
@@ -231,6 +303,18 @@ manala_apt_packages:
   - package:  bzip2  # Name of package, required
     state: absent # State of package, optionnal, default 'present'
     force: true   # Force installation, optionnal
+```
+
+### Flags
+
+Update packages
+```yaml
+manala_apt:
+  update: true
+
+# Can also be set across manala roles
+manala:
+  update: true
 ```
 
 # Licence

@@ -1,10 +1,10 @@
 ---
 
 - name: "{{ test }}"
-  hosts: debian.jessie
+  hosts: debian:!debian.wheezy
   become: true
   pre_tasks:
-    - include: pre_tasks/nodesource_7.yml
+    - import_tasks: pre_tasks/nodesource_7.yml
     - copy:
         dest: /etc/apt/preferences.d/nodejs
         content: |

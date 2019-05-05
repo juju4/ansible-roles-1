@@ -1,6 +1,11 @@
 ---
 
+# Requirements
+- import_tasks: requirements.yml
+  tags:
+    - manala_java
+
 # Install
-- include: install.yml
+- import_tasks: install.yml
   tags:
     - manala_java

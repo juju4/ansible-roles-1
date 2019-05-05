@@ -40,10 +40,21 @@ Using ansible galaxy requirements file:
 - src: manala.vault
 ```
 
+## Role Variables
+
+### Definition
+
+| Name                                    | Default                 | Type   | Description                            |
+| --------------------------------------- | ----------------------- | ------ | -------------------------------------- |
+| `manala_vault_install_packages`         | ~                       | Array  | Dependency packages to install         |
+| `manala_vault_install_packages_default` | ['vault']               | Array  | Default dependency packages to install |
+| `manala_vault_config_file`              | '/etc/vault/config.hcl' | String | Main configuration file path           |
+| `manala_vault_config_template`          | ~                       | String | Main configuration template path       |
+
 ## Configuration example
 
 ```yaml
-manala_vault_config_template: "{{ playbook_dir }}/templates/vault/vault/config.hcl.j2"
+manala_vault_config_template: vault/vault/config.hcl.j2
 ```
 
 ## Example playbook

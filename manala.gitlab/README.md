@@ -37,11 +37,13 @@ dependencies:
 
 ## Role Variables
 
-| Name                                | Default                           | Type    | Description                                                               |
-| ----------------------------------- | --------------------------------  | ------- | ------------------------------------------------------------------------- |
-| `manala_gitlab_configs`             | []                                | Array   | Configuration files                                                       |
-| `manala_gitlab_configs_exclusive`   | false                             | Boolean | If true, will delete any extra configuration files.                       |
-| `manala_gitlab_configs_dir`         | /etc/gitlab                       | String  | Path to the main configuration directory.                                 |
+| Name                                     | Default       | Type    | Description                                        |
+| ---------------------------------------- | ------------- | ------- | -------------------------------------------------- |
+| `manala_gitlab_install_packages`         | ~             | Array   | Dependency packages to install                     |
+| `manala_gitlab_install_packages_default` | ['gitlab-ce'] | Array   | Default dependency packages to install             |
+| `manala_gitlab_configs`                  | []            | Array   | Configuration files                                |
+| `manala_gitlab_configs_exclusive`        | false         | Boolean | If true, will delete any extra configuration files |
+| `manala_gitlab_configs_dir`              | '/etc/gitlab' | String  | Path to the main configuration directory           |
 
 ### Configuration example
 
@@ -51,9 +53,9 @@ manala_gitlab_version: 8.1.*
 manala_gitlab_configs_exclusive: true
 manala_gitlab_configs:
   - file:     gitlab-secrets.json
-    template: "{{ playbook_dir }}/templates/gitlab-secrets.json.j2"
+    template: gitlab-secrets.json.j2
   - file:     gitlab.rb
-    template: "{{ playbook_dir }}/templates/gitlab.rb.j2"
+    template: gitlab.rb.j2
 ```
 
 ## Example playbook

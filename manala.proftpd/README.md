@@ -41,15 +41,17 @@ Role Handlers
 Role Variables
 --------------
 
-| Name                                | Default             | Type    | Description                                 |
-| ----------------------------------- | ------------------- | ------- | ------------------------------------------- |
-| `manala_proftpd_configs`            | []                  | Array   | Configs                                     |
-| `manala_proftpd_configs_template`   | configs/empty.j2    | String  | Template to use to define a config set      |
-| `manala_proftpd_configs_exclusive`  | false               | Boolean | Exclusion of existings files                |
-| `manala_proftpd_configs_dir`        | /etc/proftpd/conf.d | String  | Path to the main configuration directory    |
-| `manala_proftpd_users_template`     | users/default.j2    | String  | Main user config template                   |
-| `manala_proftpd_users_file`         | /etc/ftpd.passwd    | String  | proFTPd user accounts definition file       |
-| `manala_proftpd_users`              | []                  | Array   | Array of proFTPd user accounts              |
+| Name                                      | Default               | Type    | Description                            |
+| ----------------------------------------- | --------------------- | ------- | -------------------------------------- |
+| `manala_proftpd_install_packages`         | ~                     | Array   | Dependency packages to install         |
+| `manala_proftpd_install_packages_default` | ['proftpd-basic']     | Array   | Default dependency packages to install |
+| `manala_proftpd_configs`                  | []                    | Array   | Configurations                         |
+| `manala_proftpd_configs_template`         | 'configs/empty.j2'    | String  | Configurations template path           |
+| `manala_proftpd_configs_exclusive`        | false                 | Boolean | Configurations exclusivity             |
+| `manala_proftpd_configs_dir`              | '/etc/proftpd/conf.d' | String  | Configurations directory path          |
+| `manala_proftpd_users_template`           | 'users/default.j2     | String  | User accounts definition template path |
+| `manala_proftpd_users_file`               | '/etc/ftpd.passwd'    | String  | User accounts definition file path     |
+| `manala_proftpd_users`                    | []                    | Array   | Array of proFTPd user accounts         |
 
 ### ProFTPd configuration
 
@@ -69,6 +71,8 @@ The `manala_proftpd_configs` key is made to allow you to define configuration ba
 
 ```yaml
 manala_proftpd_configs:
+  - file:                   foo.conf
+    state: absent
   - file:                   proftpd.conf
     config:
       - ServerName:         "Manala"
@@ -93,9 +97,28 @@ manala_proftpd_configs:
       - RequireValidShell:          "No"
 ```
 
+### VirtualHost
+You can also use VirtualHost configuration
+```yaml
+  - file: virtual_host_foo.conf
+    config:
+      - VirtualHost ftp.foo.com:
+        - ServerName: Foo FTP Server
+        - MaxClients: 10
+        - MaxLoginAttempts: 1
+        - Limit LOGIN:
+          - Order: Allow,Deny
+          - AllowUser: foo
+          - Deny: from all
+        - DefaultRoot: "~"
+        - Directory /srv/ftp/docs:
+          - Limit ALL:
+            - DenyAll
+```
+
 ### Exclusivity
 
-`manala_proftpd_configs_exclusive` allow you to clean up existing proFTPd configuration files into directory defined by the `manala_proftpd_configs_dir` key. Made to be sure no old or manualy created files will alter current configuration.
+`manala_proftpd_configs_exclusive` allow you to clean up existing proFTPd configuration files into directory defined by the `manala_proftpd_configs_dir` key. Made to be sure no old or manually created files will alter current configuration.
 
 ```yaml
 manala_proftpd_configs_exclusive: true
@@ -103,7 +126,7 @@ manala_proftpd_configs_exclusive: true
 
 ### User account configuration
 
-The `manala_proftpd_users_template` key is made to define users allow to acces to FTP storage.
+Use the `manala_proftpd_users_template` key to define users allowed to access FTP storage.
 
 ```yaml
 manala_proftpd_users:
@@ -116,6 +139,9 @@ manala_proftpd_users:
       home:             "/home/toto"
       shell:            "/bin/false"
 ```
+We strongly encourage you to generate SHA2 password hash
+On linux, it can be generated with:
+`echo -n yourpassword | mkpasswd --method=sha-512 -`
 
 Example playbook
 ----------------
@@ -123,7 +149,7 @@ Example playbook
 ```yaml
 - hosts: servers
   roles:
-    - { role: manala.nginx }
+    - { role: manala.proftpd }
 ```
 
 Tests

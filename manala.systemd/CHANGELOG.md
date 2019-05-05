@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.0.4] - 2018-10-17
+### Fixed
+- Python 3 compatibility
+
+## [1.0.3] - 2018-06-05
+### Changed
+- Replace deprecated uses of "include"
+
+## [1.0.2] - 2017-12-06
+### Added
+- Debian stretch support
+
 ### Changed
 - Skip linting on manual systemctl call in "systemd reload" handler
 

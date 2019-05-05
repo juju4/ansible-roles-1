@@ -44,10 +44,16 @@ Using ansible galaxy requirements file:
 
 ## Role Variables
 
-| Name                                | Default          | Type   | Description                         |
-| ----------------------------------- | ---------------- | ------ | ----------------------------------- |
-| `manala_keepalived_config_template` | config/empty.j2  | String | Keepalived config base template     |
-| `manala_keepalived_config`          | []               | Array  | Keepalived config directives        |
+| Name                                         | Default                           | Type   | Description                                       |
+| -------------------------------------------- | --------------------------------- | ------ | ------------------------------------------------- |
+| `manala_keepalived_install_packages`         | ~                                 | Array  | Dependency packages to install directives         |
+| `manala_keepalived_install_packages_default` | ['keepalived']                    | Array  | Default dependency packages to install directives |
+| `manala_keepalived_config_template`          | 'config/empty.j2'                 | String | Configuration base template path                  |
+| `manala_keepalived_config`                   | []                                | Array  | Configuration directives                          |
+| `manala_keepalived_config_file`              | '/etc/keepalived/keepalived.conf' | Array  | Configuration file path                           |
+| `manala_keepalived_environment_template`     | 'config/empty.j2'                 | String | Environment base template path                    |
+| `manala_keepalived_environment`              | []                                | Array  | Environment directives                            |
+| `manala_keepalived_environment_file`         | '/etc/default/keepalived'         | Array  | Environment file path                             |
 
 ### Configuration example
 
@@ -63,6 +69,13 @@ manala_keepalived_config:
     - virtual_ipaddress:
       - 192.168.200.11/24 dev eth0
       - 192.168.200.12/24 dev eth0
+```
+
+Start keepalived daemon with extra parameters :
+
+```yaml
+manala_keepalived_environment:
+  - DAEMON_ARGS: --log-console --log-detail
 ```
 
 ## Example playbook

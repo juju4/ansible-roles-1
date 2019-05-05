@@ -1,16 +1,11 @@
 ---
 
-# Dependencies
-- include: dependencies.yml
-  tags:
-    - manala_composer
-
 # Install
-- include: install.yml
+- import_tasks: install.yml
   tags:
     - manala_composer
 
 # Users Auth
-- include: users_auth.yml
+- import_tasks: users_auth.yml
   tags:
     - manala_composer

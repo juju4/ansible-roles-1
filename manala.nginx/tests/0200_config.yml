@@ -4,12 +4,15 @@
   hosts: debian
   become: true
   vars:
+    manala_nginx_config_file: /etc/nginx/nginx.conf.test
     manala_nginx_config:
       - worker_processes: 3
+      - load_module: foo
+      - load_module: bar
       - events:
         - worker_connections: 1234
   pre_tasks:
-    - include: pre_tasks/nginx.yml
+    - import_tasks: pre_tasks/nginx.yml
   roles:
     - manala.nginx
   post_tasks:

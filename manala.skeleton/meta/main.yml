@@ -7,11 +7,13 @@ galaxy_info:
   description:         Handle skeleton
   license:             MIT
   min_ansible_version: 2.0.0
+  issue_tracker_url:   https://github.com/manala/ansible-roles/issues
   platforms:
     - name: Debian
       versions:
         - wheezy
         - jessie
+        - stretch
   galaxy_tags:
     - skeleton
 
@@ -35,10 +37,6 @@ dependencies:
         prefix: manala_
     tags:
       - always
-
-  # Accounts
-  - role: manala.accounts
-    when: manala_skeleton_options.docker
 
   # Motd
   - role: manala.motd
@@ -88,14 +86,6 @@ dependencies:
   - role: manala.files
     when: manala_skeleton_options.files
 
-  # Docker
-  - role: manala.docker
-    when: manala_skeleton_options.docker
-
-  # Systemd
-  - role: manala.systemd
-    when: manala_skeleton_options.systemd
-
   # Make
   - role: manala.make
     when: manala_skeleton_options.make
@@ -129,14 +119,6 @@ dependencies:
   # PhantomJS
   - role: manala.phantomjs
     when: manala_skeleton_options.phantomjs
-
-  # Heka
-  - role: manala.heka
-    when: manala_skeleton_options.heka
-
-  # RTail
-  - role: manala.rtail
-    when: manala_skeleton_options.rtail and manala_skeleton_options.nodejs
 
   # Ngrok
   - role: manala.ngrok
@@ -193,6 +175,10 @@ dependencies:
   # SQLite
   - role: manala.sqlite
     when: manala_skeleton_options.sqlite
+
+  # Thumbor
+  - role: manala.thumbor
+    when: manala_skeleton_options.thumbor
 
   # # Dnsmasq
   # - role: manala.dnsmasq

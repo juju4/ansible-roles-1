@@ -10,20 +10,16 @@
       - file:   /etc/profile.d/test.sh
         export: true
     manala_environment_variables:
-      - FOO: bar
-      - BAR: foo
-      - BAR: baz
-      - name:  FOO_EXPANDED
-        value: bar_expanded
-      - FOO_NULL:  null
-      - FOO_TRUE:  true
-      - FOO_FALSE: false
+      FOO: bar
+      BAR: 123
+      BAZ: 1.2
+      QUX: foo=bar
   pre_tasks:
     - copy:
         dest: /etc/environment
         content: |
-          BAZ="baz"
-          FOO="foo"
+          _FOO="bar"
+          _BAR="123"
     - file:
         path: /etc/zsh
         state: directory
