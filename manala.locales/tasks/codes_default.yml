@@ -12,4 +12,6 @@
     dest:   /etc/locale.conf
     regexp: "LANG="
     line:   "LANG={{ manala_locales_codes_default }}"
+    create: true
+    backup: true
   when: ansible_os_family == "RedHat"
