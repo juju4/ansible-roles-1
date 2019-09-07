@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.6] - 2019-06-18
+### Fixed
+- Telegraf 1.11 config template
+
 ## [1.0.5] - 2018-11-07
 ### Fixed
 - Telegraf 1.8.3 config(s) templates

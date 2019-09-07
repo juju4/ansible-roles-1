@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.33] - 2019-07-10
+### Fixed
+- Update dependency roles names
+
 ## [1.0.32] - 2019-04-16
 ### Fixed
 - Handle wheezy archive repo

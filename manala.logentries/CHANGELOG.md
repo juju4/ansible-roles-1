@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.3] - 2019-05-21
+### Fixed
+- Delete mode recurse on config file directory
+- Add correct mode on config file
+
 ## [1.0.2] - 2018-10-17
 ### Fixed
 - Python 3 compatibility

@@ -5,8 +5,18 @@
   tags:
     - manala_mysql
 
+# Config
+- import_tasks: config.yml
+  tags:
+    - manala_mysql
+
 # Configs
 - import_tasks: configs.yml
+  tags:
+    - manala_mysql
+
+# Data dir
+- import_tasks: data_dir.yml
   tags:
     - manala_mysql
 

@@ -299,6 +299,9 @@ manala_apt_repositories_patterns:
   newrelic:
     source: deb http://apt.newrelic.com/debian/ newrelic non-free
     key: newrelic
+  newrelic-infra:
+    source: deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt {{ ansible_distribution_release }} main
+    key: newrelic-infra
   influxdata:
     source: deb https://repos.influxdata.com/debian {{ ansible_distribution_release }} stable
     key: influxdata
@@ -337,6 +340,12 @@ manala_apt_repositories_patterns:
   mica:
     source: deb https://dl.bintray.com/obiba/deb all main
     key: mica
+  glusterfs_6:
+    source: deb https://download.gluster.org/pub/gluster/glusterfs/6/LATEST/Debian/{{ ansible_distribution_release }}/{{ {'x86_64':'amd64','armv6l':'arm64'}[ansible_architecture] }}/apt {{ ansible_distribution_release }} main
+    key: glusterfs_6
+  glusterfs_6_1:
+    source: deb https://download.gluster.org/pub/gluster/glusterfs/6/6.1/Debian/{{ ansible_distribution_release }}/{{ {'x86_64':'amd64','armv6l':'arm64'}[ansible_architecture] }}/apt {{ ansible_distribution_release }} main
+    key: glusterfs_6
 
 # Keys
 manala_apt_keys_patterns:
@@ -431,6 +440,9 @@ manala_apt_keys_patterns:
   newrelic:
     url: https://download.newrelic.com/548C16BF.gpg
     id: 548C16BF
+  newrelic-infra:
+    url: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    id: 8ECCE87C
   influxdata:
     keyserver: hkp://keyserver.ubuntu.com:80
     id: 2582E0C5
@@ -476,6 +488,9 @@ manala_apt_keys_patterns:
   mica:
     keyserver: hkp://keyserver.ubuntu.com:80
     id: 379CE192D401AB61
+  glusterfs_6:
+    url: https://download.gluster.org/pub/gluster/glusterfs/6/rsa.pub
+    id: C2F8238C
 
 # Preferences
 manala_apt_preferences_patterns:
@@ -530,3 +545,5 @@ manala_apt_preferences_patterns:
       'stretch': 'libavcodec57 libavdevice57 libavfilter6 libavformat57 libavresample3 libavutil55 libpostproc54 libswresample2 libswscale4'
     }[ansible_distribution_release]
   }}"
+  glusterfs:          glusterfs-*
+  newrelic-infra:     newrelic-infra

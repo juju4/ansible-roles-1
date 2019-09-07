@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.38] - 2019-07-23
+### Added
+- Newrelic-infra repository & key pattern
+
+## [1.0.37] - 2019-05-21
+### Added
+- Glusterfs repository & key pattern
+
 ## [1.0.36] - 2019-04-16
 ### Fixed
 - Switch wheezy debian security repository to archive

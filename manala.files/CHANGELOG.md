@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.6] - 2019-08-29
+### Added
+- Handle states for `copy`, `content` and `template`
+
 ## [1.0.5] - 2018-10-17
 ### Fixed
 - Python 3 compatibility

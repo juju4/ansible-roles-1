@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.7] - 2019-07-11
+### Added
+- Supports `/etc/my.cnf` configuration with `manala_mysql_config`
+- Create mysql data directory
+
 ## [1.0.6] - 2018-10-31
 ### Added
 - Supports mariadb 10.3 for debian jessie and stretch
