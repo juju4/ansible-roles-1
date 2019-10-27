@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.10] - 2019-10-24
+### Added
+- Debian buster support
+- Support version 7
+
+## [1.0.9] - 2019-09-27
+### Added
+- Handle environment file
+
+### Fixed
+- Version 7 base config template
+
+## [1.0.8] - 2019-09-20
+### Added
+- Support version 7
+
 ## [1.0.7] - 2019-05-21
 ### Fixed
 - Restart service after plugin installations

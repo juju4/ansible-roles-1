@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [1.0.4 - 2019-02-04
+## [1.0.7] - 2019-10-24
+### Added
+- Debian buster support
+
+## [1.0.6] - 2019-09-27
+### Added
+- Handle configs content
+
+## [1.0.5] - 2019-09-25
+### Added
+- Handle configs state (present|absent)
+
+## [1.0.4] - 2019-02-04
 ### Removed
 - Remove too specific "app" configs templates
 

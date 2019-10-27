@@ -51,14 +51,31 @@ manala_logrotate_configs:
   - file: nginx_example
     config:
       - /var/log/nginx/example/*.log:
-        - size:          200M
+        - size: 200M
         - missingok
-        - rotate:        0
+        - rotate: 0
         - compress
-        - delaycompress:
+        - delaycompress
         - notifempty
-        - create:        0640 www-data adm
+        - create: 0640 www-data adm
         - sharedscripts
+  - file: nginx_example_2
+    content: |
+      /var/log/nginx/example/*/*.log
+      /var/log/nginx/example/*/*/*.log {
+        size 200M
+        missingok
+        rotate 0
+        compress
+        delaycompress
+        notifempty
+        create 0640 www-data adm
+        sharedscripts
+      }
+  - file: nginx_template
+    template: logrotate/nginx.j2
+  - file: nginx_absent
+    state: absent
 ```
 
 ## Example playbook

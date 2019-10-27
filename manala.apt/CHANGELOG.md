@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.41] - 2019-10-24
+### Added
+- Debian buster support
+- Nodejs 12 support
+- Varnish 6.1 support
+
+## [1.0.40] - 2019-10-21
+### Added
+- Graylog_sidecat key pattern
+
+## [1.0.39] - 2019-09-20
+### Added
+- Elasticsearch 7 support
+
 ## [1.0.38] - 2019-07-23
 ### Added
 - Newrelic-infra repository & key pattern
